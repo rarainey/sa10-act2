@@ -16,6 +16,8 @@ class GildedRose
       return brie_tick
     when 'Sulfuras, Hand of Ragnaros'
       return sulfuras_tick 
+    when 'Backstage passes to a TAFKAL80ETC concert'
+      return backstage_tick
     end
 
     if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
@@ -82,5 +84,15 @@ class GildedRose
   def sulfuras_tick
     return
   end
-  
+
+  def backstage_tick
+    @days_remaining -= 1
+    return if @quality >= 50
+    return @quality = 0 if @days_remaining < 0
+
+    @quality += 1
+    @quality += 1 if @days_remaining < 10
+    @quality += 1 if @days_remaining < 5
+  end
+
 end
