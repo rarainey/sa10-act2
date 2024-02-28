@@ -43,11 +43,22 @@ module GildedRose
     end
   end
 
+  class Conjured < Item
+    def tick
+      @days_remaining -= 1
+      return if @quality == 0
+
+      @quality -= 2
+      @quality -= 2 if @days_remaining <= 0
+    end
+  end
+
   DEFAULT_CLASS = Item
   SPECIALIZED_CLASS = {
     'Normal Item' => NormalItem, 
     'Aged Brie' => Brie, 
-    'Backstage passes to a TAFKAL80ETC concert' => Backstage}
+    'Backstage passes to a TAFKAL80ETC concert' => Backstage,
+    'Conjured Mana Cake' => Conjured}
 
   def self.new(name:, days_remaining:, quality:)
     @item = (SPECIALIZED_CLASS[name] || DEFAULT_CLASS).new(quality, days_remaining)
