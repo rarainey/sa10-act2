@@ -31,16 +31,13 @@ class GildedRose
   end
 
   def normal_tick
-    @item = Normal.new(quality, days_remaining)
+    @item = NormalItem.new(quality, days_remaining)
     item.tick
   end
 
   def brie_tick
-    @days_remaining -= 1
-    return if @quality >= 50
-
-    @quality += 1 
-    @quality += 1 if @days_remaining <= 0 and @quality < 50
+    @item = Brie.new(quality, days_remaining)
+    item.tick
   end
 
   def sulfuras_tick
@@ -72,4 +69,21 @@ class GildedRose
       @quality -= 1 if @days_remaining <= 0
     end
   end
+
+  class Brie
+    attr_reader :quality, :days_remaining
+
+    def initialize(quality, days_remaining)
+      @quality, @days_remaining = quality, days_remaining
+    end
+
+    def tick
+      @days_remaining -= 1
+      return if @quality >= 50
+  
+      @quality += 1 
+      @quality += 1 if @days_remaining <= 0 and @quality < 50
+    end
+  end
+
 end
